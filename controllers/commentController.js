@@ -3,7 +3,12 @@ import pool from '../database/db.js';
 // Get all comments
 export const getComments = async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM comments ORDER BY created_at DESC');
+    const result = await pool.query(
+      `SELECT comments.id, comments.content, comments.created_at, users.username 
+      FROM comments 
+      JOIN users ON comments.user_id = users.id
+      ORDER BY comments.created_at DESC
+      `);
     res.json(result.rows);
   } catch (err) {
     console.error('Comments connection failed', err);
@@ -13,30 +18,47 @@ export const getComments = async (req, res) => {
 
 // Post comment
 export const addComment = async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(403).json({ error:'You must be logged in to comment' });
+  }
+
+  const { content } = req.body;
+  const userId = req.session.userId;
+
   try {
-    const { content } = req.body;
     if (!content || content.trim() === '') return res.status(400).json({ error: 'Cant be empty!'});
 
-    const result = await pool.query('INSERT INTO comments (content) VALUES ($1) RETURNING *', [content]);
-    res.status(201).json(result.rows[0]);
+    const result = await pool.query('INSERT INTO comments (content, user_id) VALUES ($1, $2) RETURNING *', [content, userId]);
+    return res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Failed to post.', err);
-    res.status(500).json({ error: 'Server failed' });
+    return res.status(500).json({ error: 'Server failed' });
   }
 };
 
 // Delete comment
 export const deleteComment = async (req, res) => {
-  try {
-    const { id } = req.params;
+  if (!req.session.userId) {
+    return res.status(403).json({ error: 'You must be logged in to delete comments' });
+  }
 
-    const checkComment = await pool.query('SELECT * FROM comments WHERE id = $1', [id]);
-    if (checkComment.rows.length === 0) {
+  const { id } = req.params;
+  const userId = req.session.userId;
+
+  try {
+    const comment = await pool.query('SELECT * FROM comments WHERE id = $1', [id]);
+
+    if (comment.rows.length === 0) {
       return res.status(404).json({ error: 'Couldnt find the comment'});
     }
 
+    if (comment.rows[0].user_id !== userId) {
+      return res.status(403).json({ error: 'Delete your own comments'});
+    }
+
     await pool.query('DELETE FROM comments WHERE id = $1', [id]);
-    res.json({ message: 'Comment deleted succesfully!'})
+    res.json({ message: 'Comment deleted'})
+
   } catch (err) {
     console.error('Failed to delete comment', err);
     res.status(500).json({ error: 'Server failed' })

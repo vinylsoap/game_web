@@ -73,7 +73,7 @@ app.delete('/api/comments/:id', deleteComment);
 
 
 
-// НЕДРЫ ПУЧИНЫ ДНИЩЕ 
+// DONT TOUCH THAT!
 app.listen(PORT, () => {
   console.log(`Server running: http://localhost:${PORT}`)
 })
