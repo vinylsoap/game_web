@@ -7,7 +7,6 @@ const API_KEY = process.env.API_KEY;
 export const getGames = async (req, res) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/games?key=${API_KEY}&genres=indie&page_size=30`);
-    console.log('RAWG api: ', response.data)
 
     const filteredGames = response.data.results.map(game => ({
       id: game.id,
