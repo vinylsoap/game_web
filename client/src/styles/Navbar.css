@@ -1,0 +1,26 @@
+/* NAVBAR */
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.left-side {
+  padding: auto;
+}
+
+.center {
+  padding: auto;
+  transform: translateX(40px);
+}
+
+.right-side {
+  display: flex;
+  gap: 30px;
+  padding-left: auto;
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+}

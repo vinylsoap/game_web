@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.body {
+  background-image: url("data:image/bmp;base64,Qk32BAAAAAAAADYAAAAoAAAACAAAAAgAAAABABgAAAAAAMAAAAATCwAAEwsAAAAAAAAAAAAAiCywhiWbfBRjZhQsRShWKTV9OzN+WCddiyqYhiKHdw9XXRApOSZKIzJqOzBqVSJOjSZ4hh5qcQdHUAgnKSI8IC5UQCxTWBs8iiFeghhTawA5RwAqIBw9KSlOTCZLZBQ3ghphexFVZgA4RgAyKRVPOSNiXCBfdg9IdhN4cgpoZABCTQA7OQ1kSBx+axt7iA5eag2NaQJ6ZABMVQBBRQZzUhaTdhiQlA9vZQuVZgCBZABQWABESQF4VRSaehaXmRB0");
+  background-size: cover;
+}
+
+/* LOADING */
+
+.loading-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* LIST */
+
+.games_list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px 0 20px 0;
+}
+
+.card-body {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.card-title {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.card-actions {
+  gap: 40px;
+}
+
+.btn_more {
+  padding: 20px;
+}
