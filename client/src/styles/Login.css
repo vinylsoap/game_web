@@ -1,0 +1,21 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+
+  height: 400px;
+  width: 600px;
+  border-radius: 15px;
+  background-color: azure;
+  box-shadow: 2px 1px 64px 0px rgba(255, 255, 255, 0.75);
+  -webkit-box-shadow: 2px 1px 64px 0px rgba(255, 255, 255, 0.75);
+  -moz-box-shadow: 2px 1px 64px 0px rgba(255, 255, 255, 0.75);
+}
+
+.login-btn {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}

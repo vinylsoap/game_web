@@ -17,14 +17,13 @@ const PORT = 5000;
 
 const corsOptions = {
   origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
 app.use(cors(corsOptions));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // Session
 app.use(
@@ -45,6 +44,8 @@ app.use("/api/users", usersRoutes);
 app.use("/api/comments", commentsRoutes);
 app.use("/api/games", gamesRoutes);
 app.use("/api/favourites", favouritesRoutes);
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // Fallback route for React
 app.get("*", (req, res) => {

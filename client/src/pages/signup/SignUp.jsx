@@ -1,42 +1,43 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import "../../styles/Login.css";
+import "../../styles/SignUp.css";
 
-function Login() {
+function SignUp() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccsessMsg] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+    setSuccsessMsg("");
 
     try {
-      await axios.post(
-        "/api/users/login",
-        {
-          username: username,
-          password: password,
-        },
-        {
-          withCredentials: true,
-        }
+      const response = await axios.post(
+        "/api/users/register",
+        { username, password },
+        { withCredentials: true }
       );
 
-      navigate("/");
+      setSuccsessMsg("Account created! Redirecting...");
+      setTimeout(() => navigate("/login"), 1500);
     } catch (error) {
-      console.error("Login error:", error);
-      setErrorMsg("Wrong email or password");
+      console.error("Signup error:", error);
+      setErrorMsg(
+        error.response?.data?.error ||
+          "Something went wrong during registration"
+      );
     }
   };
 
   return (
     <div className="container">
-      <div className="login-page">
+      <div className="signup-page">
         <div className="title">
-          <h2>Log in!</h2>
+          <h2>Create an Account</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="input-fields">
@@ -62,19 +63,33 @@ function Login() {
               />
             </div>
           </div>
+
           {errorMsg && <p className="error">{errorMsg}</p>}
-          <div className="login-btn">
+          {successMsg && <p className="succsess">{successMsg}</p>}
+          <div className="submit-btn">
+            <button
+              type="submit"
+              className="btn submit-btn-inner btn-outline btn-primary"
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
+
+        <div className="login-btn">
+          <p>Already have an account?</p>
+          <a href="/login">
             <button
               type="submit"
               className="btn login-btn-inner btn-outline btn-primary"
             >
               Log in
             </button>
-          </div>
-        </form>
+          </a>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default SignUp;
