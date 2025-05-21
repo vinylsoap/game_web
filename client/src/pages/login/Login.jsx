@@ -25,10 +25,10 @@ function Login() {
         }
       );
 
-      navigate("/");
+      navigate("/homepage");
     } catch (error) {
       console.error("Login error:", error);
-      setErrorMsg("Wrong email or password");
+      setErrorMsg("Wrong username or password");
     }
   };
 

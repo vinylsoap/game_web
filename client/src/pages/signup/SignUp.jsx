@@ -64,8 +64,8 @@ function SignUp() {
             </div>
           </div>
 
-          {errorMsg && <p className="error">{errorMsg}</p>}
-          {successMsg && <p className="succsess">{successMsg}</p>}
+          {errorMsg && <p className="paragraph error">{errorMsg}</p>}
+          {successMsg && <p className="paragraph succsess">{successMsg}</p>}
           <div className="submit-btn">
             <button
               type="submit"
@@ -77,7 +77,7 @@ function SignUp() {
         </form>
 
         <div className="login-btn">
-          <p>Already have an account?</p>
+          <p className="paragraph">Already have an account?</p>
           <a href="/login">
             <button
               type="submit"

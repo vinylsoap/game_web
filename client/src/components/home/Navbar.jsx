@@ -1,12 +1,29 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/Navbar.css";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    try {
+      await fetch("/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      navigate("/signup");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <>
       <div className="navbar bg-base-100 shadow-sm">
         <div className="left-side">
-          <button className="btn btn-ghost">Log out</button>
+          <button className="btn btn-ghost" onClick={handleLogOut}>
+            Log out
+          </button>
         </div>
         <div className="center">
           <a className="btn btn-ghost text-xl">Games</a>

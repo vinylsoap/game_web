@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../../styles/GameInfo.css";
+import Navbar from "../../components/home/Navbar";
 
 function GameInfo() {
   const { id } = useParams();
@@ -32,13 +33,14 @@ function GameInfo() {
 
   return (
     <div>
+      <Navbar />
       <div className="game_main">
         <div className="game-left_side">
           <div className="game_name">
             <h1>{game.name}</h1>
           </div>
           <div className="game_image">
-            <img src={game.image} alt={game.name} />
+            <img className="image" src={game.image} alt={game.name} />
           </div>
         </div>
 
