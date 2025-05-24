@@ -22,12 +22,10 @@ router.post("/logout", (req, res) => {
     res.json({ message: "Logged out succsessfully" });
   });
 });
-// router.post("/isauthenticated", isAuthenticated)
+router.post("/isauthenticated", isAuthenticated);
 
-// TESTING SESSION DELETE LATER
+// TESTING SESSION
 router.get("/check-session", (req, res) => {
-  console.log("Session:", req.session);
-
   if (req.session.userId) {
     res.json({ loggedIn: true, userId: req.session.userId });
   } else {

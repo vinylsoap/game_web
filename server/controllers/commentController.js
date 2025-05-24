@@ -10,7 +10,7 @@ export const getComments = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT comments.id, comments.content, comments.created_at, users.username 
+      `SELECT comments.id, comments.content, comments.created_at, comments.user_id, users.username 
       FROM comments 
       JOIN users ON comments.user_id = users.id
       WHERE comments.game_id = $1
@@ -27,12 +27,12 @@ export const getComments = async (req, res) => {
 
 // Post comment
 export const addComment = async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(403).json({ error: "You must be logged in to comment" });
-  }
-
   const { content } = req.body;
   const { game_id } = req.body;
+
+  if (!req.session.userId) {
+    return res.status(403).json({ error: "You must be logged in" });
+  }
 
   const userId = req.session.userId;
 
@@ -52,11 +52,20 @@ export const addComment = async (req, res) => {
     }
 
     const result = await pool.query(
-      "INSERT INTO comments (content, game_id, user_id) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO comments (content, game_id, user_id) VALUES ($1, $2, $3) RETURNING id",
       [content, game_id, userId]
     );
 
-    return res.status(201).json(result.rows[0]);
+    const insertedId = result.rows[0].id;
+
+    const enriched = await pool.query(
+      `SELECT comments.id, comments.content, comments.created_at, comments.user_id, users.username FROM comments
+      JOIN users ON comments.user_id = users.id
+      WHERE comments.id = $1`,
+      [insertedId]
+    );
+
+    return res.status(201).json(enriched.rows[0]);
   } catch (err) {
     console.error("Failed to post.", err);
     return res.status(500).json({ error: "Server failed" });

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../../styles/GameInfo.css";
 import Navbar from "../../components/home/Navbar";
+import Comments from "../../components/home/Comments";
 
 function GameInfo() {
   const { id } = useParams();
@@ -34,28 +35,31 @@ function GameInfo() {
   return (
     <div>
       <Navbar />
-      <div className="game_main">
-        <div className="game-left_side">
-          <div className="game_name">
-            <h1>{game.name}</h1>
-          </div>
-          <div className="game_image">
-            <img className="image" src={game.image} alt={game.name} />
-          </div>
+      <div className="game_inner">
+        <div className="game_name">
+          <h1>{game.name}</h1>
         </div>
-
-        <div className="game-right_side">
-          <div className="game_sub-info">
-            <p>Released: {game.released}</p>
-            <p>Rating: {game.rating}</p>
+        <div className="game_main">
+          <div className="game-left_side">
+            <div className="game_image">
+              <img className="image" src={game.image} alt={game.name} />
+            </div>
           </div>
 
-          <div
-            className="game_description"
-            dangerouslySetInnerHTML={{ __html: game.description }}
-          ></div>
+          <div className="game-right_side">
+            <div className="game_sub-info">
+              <p>Released: {game.released}</p>
+              <p>Rating: {game.rating}</p>
+            </div>
+
+            <div
+              className="game_description"
+              dangerouslySetInnerHTML={{ __html: game.description }}
+            ></div>
+          </div>
         </div>
       </div>
+      <Comments />
     </div>
   );
 }

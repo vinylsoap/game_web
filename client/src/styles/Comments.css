@@ -1,0 +1,64 @@
+.comments-main {
+  margin: 60px auto 0;
+  background-color: rgba(0, 0, 0, 0.209);
+  box-shadow: -1px 0px 89px 14px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -1px 0px 89px 14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 0px 89px 14px rgba(0, 0, 0, 0.75);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  border-radius: 30px;
+  width: 50%;
+}
+
+.first-comment {
+  color: aliceblue;
+}
+
+.input-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-game {
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+  margin-bottom: 100px;
+}
+
+.btn-soft {
+  border: none;
+  padding: 13px 20px;
+}
+
+.list-game {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.chat-bubble {
+  padding: 15px 10px;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.content-name {
+  display: flex;
+  color: aliceblue;
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 5px;
+
+  align-items: center;
+}
+
+.time-game {
+  margin-left: 20px;
+}
+
+.btn-delete {
+  padding: 13px 20px;
+  align-self: flex-end;
+  margin-left: 40px;
+}
