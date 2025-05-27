@@ -18,9 +18,11 @@
   display: flex;
   gap: 30px;
   padding-left: auto;
+  align-items: center;
 }
 
-.avatar {
-  height: 40px;
-  width: 40px;
+.username-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: darkviolet;
 }

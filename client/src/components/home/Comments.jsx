@@ -10,6 +10,49 @@ function Comments() {
 
   const [currentUserId, setCurrentUserId] = useState(null);
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editCommentId, setEditCommentId] = useState(null);
+  const [editContent, setEditContent] = useState("");
+
+  const openEditModal = (comment) => {
+    setEditCommentId(comment.id);
+    setEditContent(comment.content);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = (comment) => {
+    setEditCommentId(null);
+    setEditContent("");
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSubmit = async () => {
+    try {
+      const res = await fetch(`/api/comments/${editCommentId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ content: editContent }),
+      });
+
+      if (res.ok) {
+        setComments((prev) =>
+          prev.map((c) =>
+            c.id === editCommentId ? { ...c, content: editContent } : c
+          )
+        );
+
+        closeEditModal();
+      } else {
+        alert("Failed to update comment");
+      }
+    } catch (error) {
+      console.error("Edit failed:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchComments = async () => {
       const res = await fetch(`/api/comments/${id}`);
@@ -102,6 +145,23 @@ function Comments() {
           <ul>
             {comments.map((comment) => (
               <li key={comment.id} className="list-game">
+                {comment.user_id === currentUserId && (
+                  <>
+                    <button
+                      type="submit"
+                      className="btn-delete"
+                      onClick={() => handleDelete(comment.id)}
+                    >
+                      🗑️
+                    </button>
+                    <button
+                      className="btn-edit"
+                      onClick={() => openEditModal(comment)}
+                    >
+                      ✏️
+                    </button>
+                  </>
+                )}
                 <div className="chat chat-start">
                   <div className="chat-header">
                     <div className="content-name">
@@ -121,20 +181,34 @@ function Comments() {
                   </div>
                   <div className="chat-bubble">{comment.content}</div>
                 </div>
-                {comment.user_id === currentUserId && (
-                  <button
-                    type="submit"
-                    className="btn btn-outline btn-primary btn-delete"
-                    onClick={() => handleDelete(comment.id)}
-                  >
-                    Delete
-                  </button>
-                )}
               </li>
             ))}
           </ul>
         </div>
       </div>
+      {isEditModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 className="text">Edit comment</h3>
+            <textarea
+              className="textarea textarea-bordered"
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+            />
+            <div className="modal-buttons">
+              <button
+                className="btn btn-primary btn-modal"
+                onClick={handleEditSubmit}
+              >
+                Save
+              </button>
+              <button className="btn btn-modal" onClick={closeEditModal}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

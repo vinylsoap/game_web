@@ -1,9 +1,32 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import "../../styles/Navbar.css";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/users/check-session", {
+          credentials: "include",
+        });
+        const data = await res.json();
+
+        if (data.loggedIn) {
+          setUsername(data.username);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleLogOut = async () => {
     try {
@@ -32,10 +55,14 @@ function Navbar() {
           <Link to={"/favourites"}>
             <button className="btn btn-ghost">Favorites</button>
           </Link>
-          <div className="avatar">
-            <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-            </div>
+          <div className="username-nav">
+            {username ? (
+              <p className="username-text">{username}</p>
+            ) : (
+              <Link to={"/signup"}>
+                <button className="btn btn-ghost">Sign up or Log in!</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

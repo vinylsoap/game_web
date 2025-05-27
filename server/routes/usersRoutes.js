@@ -27,7 +27,11 @@ router.post("/isauthenticated", isAuthenticated);
 // TESTING SESSION
 router.get("/check-session", (req, res) => {
   if (req.session.userId) {
-    res.json({ loggedIn: true, userId: req.session.userId });
+    res.json({
+      loggedIn: true,
+      userId: req.session.userId,
+      username: req.session.username,
+    });
   } else {
     res.json({ loggedIn: false });
   }

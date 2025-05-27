@@ -20,9 +20,7 @@ function GamesList() {
       const filteredGames = response.data.map((game) => ({
         id: game.id,
         name: game.name,
-        released: game.released,
         image: game.image,
-        rating: game.rating,
       }));
 
       setName(filteredGames);
