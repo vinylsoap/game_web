@@ -1,9 +1,37 @@
-function HeartButton() {
+import { useState, useEffect } from "react";
+
+function HeartButton({ gameId, isInitiallyFavorited, onToggle }) {
+  const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
+
+  const toggleFavorite = async () => {
+    try {
+      const url = `/api/favourites/${gameId}`;
+      const res = await fetch(isFavorited ? url : "/api/favourites", {
+        method: isFavorited ? "DELETE" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: isFavorited ? null : JSON.stringify({ game_id: gameId }),
+      });
+
+      if (res.ok) {
+        setIsFavorited(!isFavorited);
+        if (onToggle) onToggle(gameId);
+      } else {
+        const err = await res.json();
+        alert(err.error || "Failed to toggle favorite");
+      }
+    } catch (error) {
+      console.error("Error:", err);
+    }
+  };
+
   return (
-    <button className="btn btn-square">
+    <button className="btn btn-square" onClick={toggleFavorite}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        fill="none"
+        fill={isFavorited ? "red" : "none"}
         viewBox="0 0 24 24"
         strokeWidth="2.5"
         stroke="currentColor"

@@ -5,6 +5,7 @@ import HomePage from "./pages/home/HomePage";
 import GameInfo from "./pages/home/GameInfo";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/SignUp";
+import Favorites from "./pages/home/Favorites";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/homepage" element={<HomePage />} />
       <Route path="/games/:id" element={<GameInfo />} />
+      <Route path="/favourites" element={<Favorites />} />
     </Routes>
   );
 }

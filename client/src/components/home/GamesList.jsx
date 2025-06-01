@@ -9,66 +9,23 @@ function GamesList() {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    games();
+    const fetchGames = async () => {
+      const res = await fetch("/api/games");
+      const data = await res.json();
+      setName(data);
+    };
+
+    const fetchFavorites = async () => {
+      const res = await fetch("/api/favourites", {
+        credentials: "include",
+      });
+      const favs = await res.json();
+      setFavorites(favs.map((f) => f.game_id));
+    };
+
+    fetchGames();
     fetchFavorites();
   }, []);
-
-  const games = async () => {
-    try {
-      const response = await axios.get("api/games");
-
-      const filteredGames = response.data.map((game) => ({
-        id: game.id,
-        name: game.name,
-        image: game.image,
-      }));
-
-      setName(filteredGames);
-    } catch (error) {
-      console.error("Error fetching games:", error);
-    }
-  };
-
-  const fetchFavorites = async () => {
-    try {
-      const response = await axios.get("/api/favourites", {
-        withCredentials: true,
-      });
-      const favIds = response.data.map((fav) => fav.game_id);
-      setFavorites(favIds);
-    } catch (error) {
-      console.error("Error fetching favorites:", error);
-    }
-  };
-
-  const toggleFavorite = async (game) => {
-    const isFav = favorites.includes(game.id);
-
-    try {
-      if (isFav) {
-        await axios.delete(`/api/favourites/${game.id}`, {
-          withCredentials: true,
-        });
-
-        setFavorites((prev) => prev.filter((id) => id !== game.id));
-      } else {
-        await axios.post(
-          "/api/favourites",
-          {
-            game_id: game.id,
-            game_title: game.name,
-            game_image: game.image,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        setFavorites((prev) => [...prev, game.id]);
-      }
-    } catch (error) {
-      console.error("toggling error:", error);
-    }
-  };
 
   if (game.length === 0) {
     return (
@@ -84,7 +41,6 @@ function GamesList() {
     <div className="body">
       <div className="games_list">
         {game.map((game) => {
-          const isFav = favorites.includes(game.id);
           return (
             <div
               className="card bg-base-100 image-full w-96 shadow-sm"
@@ -99,7 +55,10 @@ function GamesList() {
                   <Link to={`/games/${game.id}`}>
                     <button className="btn btn-primary btn_more">More</button>
                   </Link>
-                  <HeartButton />
+                  <HeartButton
+                    gameId={game.id}
+                    isInitiallyFavorited={favorites.includes(game.id)}
+                  />
                 </div>
               </div>
             </div>
