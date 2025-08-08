@@ -48,9 +48,11 @@ function Navbar() {
             Log out
           </button>
         </div>
-        <div className="center">
-          <a className="btn btn-ghost text-xl">Games</a>
-        </div>
+        <Link to={"/homepage"}>
+          <div className="center">
+            <button className="btn btn-ghost text-xl">Games</button>
+          </div>
+        </Link>
         <div className="right-side">
           <Link to={"/favourites"}>
             <button className="btn btn-ghost">Favorites</button>

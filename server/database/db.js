@@ -6,16 +6,16 @@ const { Pool } = pkg;
 
 // Pool connection
 const pool = new Pool({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "postgres",
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER,
   port: process.env.DB_PORT || 5432,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME || "game_web"
+  database: process.env.DB_NAME,
 });
 
-pool.connect()
-.then(() => console.log('Connected!'))
-.catch(err => console.log('Fucked', err));
-
+pool
+  .connect()
+  .then(() => console.log('Connected!'))
+  .catch((err) => console.log('Fucked', err));
 
 export default pool;

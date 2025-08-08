@@ -13,6 +13,10 @@ export const registerUser = async (req, res) => {
         .json({ error: "Username and password are required" });
     }
 
+    if (/\s/.test(username) || /\s/.test(password)) {
+      return res.status(400).json({ error: "No spaces allowed" });
+    }
+
     // User exists? check
     const userCheck = await pool.query(
       "SELECT * FROM users WHERE username = $1",
@@ -49,6 +53,10 @@ export const loginUser = async (req, res) => {
       return res
         .status(400)
         .json({ error: "Username and password are required" });
+    }
+
+    if (/\s/.test(username) || /\s/.test(password)) {
+      return res.status(400).json({ error: "No spaces allowed" });
     }
 
     // User exists? check
