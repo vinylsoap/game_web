@@ -76,5 +76,7 @@ to help you write less code and build faster.
 ## To-do
 - Adapt to devices of all sizes.
 - Add more games to the list.
-- Add the ability to search by title.
+- Add pagination to the games and infinite scrolling to the comments
+- Add the ability to search by title. 
+- Rewrite with typescript 
 
