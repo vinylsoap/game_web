@@ -9,6 +9,11 @@
   padding: auto;
 }
 
+.games-btn {
+  padding: 20px;
+  font-size: large;
+}
+
 .center {
   padding: auto;
   transform: translateX(40px);
@@ -25,4 +30,49 @@
   font-size: 15px;
   font-weight: 600;
   color: darkviolet;
+}
+
+@media (max-width: 580px) {
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .games-btn {
+    padding: 15px;
+    font-size: small;
+  }
+
+  .btn-ghost {
+    font-size: small;
+  }
+
+  .left-side {
+    padding-left: 20px;
+  }
+
+  .right-side {
+    gap: 30px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar {
+    justify-content: space-around;
+  }
+
+  .center {
+    padding: 5px;
+    transform: translateX(10px);
+    font-size: small;
+  }
+
+  .left-side {
+    padding-left: 20px;
+  }
+
+  .right-side {
+    flex-direction: column-reverse;
+    gap: 1px;
+  }
 }

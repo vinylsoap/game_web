@@ -19,3 +19,39 @@
   justify-content: center;
   gap: 20px;
 }
+
+@media (max-width: 700px) {
+  .login-page {
+    gap: 5px;
+
+    height: 350px;
+    width: 550px;
+  }
+}
+
+@media (max-width: 630px) {
+  .login-page {
+    gap: 5px;
+
+    height: 280px;
+    width: 480px;
+  }
+}
+
+@media (max-width: 530px) {
+  .login-page {
+    gap: 20px;
+
+    height: 400px;
+    width: 400px;
+  }
+}
+
+@media (max-width: 460px) {
+  .login-page {
+    gap: 20px;
+
+    height: 350px;
+    width: 330px;
+  }
+}

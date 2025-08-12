@@ -56,3 +56,77 @@
   font-size: 17px;
   font-weight: 800;
 }
+
+@media (max-width: 1300px) {
+  .game_name {
+    font-size: 45px;
+    margin-bottom: 30px;
+  }
+
+  .game_image {
+    width: 500px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .game_name {
+    font-size: 45px;
+    margin-bottom: 30px;
+  }
+
+  .game_image {
+    width: 350px;
+  }
+}
+
+@media (max-width: 970px) {
+  .game_main {
+    column-gap: 30px;
+  }
+
+  .game_name {
+    font-size: 40px;
+    margin-bottom: 25px;
+  }
+
+  .game_image {
+    width: 350px;
+    margin-bottom: 30px;
+  }
+
+  .game_sub-info {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .game_description {
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 840px) {
+  .game_main {
+    flex-direction: column;
+    column-gap: 30px;
+  }
+
+  .game_image {
+    width: 600px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 650px) {
+  .game_image {
+    width: 450px;
+    height: 250px;
+  }
+}
+
+@media (max-width: 490px) {
+  .game_image {
+    width: 330px;
+    height: 250px;
+  }
+}

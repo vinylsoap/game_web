@@ -8,31 +8,28 @@ export const getGames = async (req, res) => {
   const { page = 1, page_size = 18 } = req.query;
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/games?key=${API_KEY}`, {
-      params: {
-        page,
-        page_size,
-      },
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/games?key=${API_KEY}&genres=indie&page_size=30`
+    );
 
-    // const next = response.data.next;
-    // const previous = response.data.previous;
+    console.log('RAWG api: ', response.data);
 
-    const result = response.data.results.map((game) => ({
-      page: Number(page),
-      page_size: Number(page_size),
+    const filteredGames = response.data.results.map((game) => ({
       id: game.id,
+
       name: game.name,
+
       released: game.released,
+
       image: game.background_image,
+
       rating: game.rating,
-      has_next: game.next !== null,
-      has_previous: game.previous !== null,
     }));
 
-    res.json(result);
+    res.json(filteredGames);
   } catch (error) {
     console.error('Failed to get the games:', error);
+
     res.status(500).json({ error: 'Server error' });
   }
 };

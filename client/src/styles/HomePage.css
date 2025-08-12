@@ -1,5 +1,5 @@
 .body {
-  background-image: url("data:image/bmp;base64,Qk32BAAAAAAAADYAAAAoAAAACAAAAAgAAAABABgAAAAAAMAAAAATCwAAEwsAAAAAAAAAAAAAiCywhiWbfBRjZhQsRShWKTV9OzN+WCddiyqYhiKHdw9XXRApOSZKIzJqOzBqVSJOjSZ4hh5qcQdHUAgnKSI8IC5UQCxTWBs8iiFeghhTawA5RwAqIBw9KSlOTCZLZBQ3ghphexFVZgA4RgAyKRVPOSNiXCBfdg9IdhN4cgpoZABCTQA7OQ1kSBx+axt7iA5eag2NaQJ6ZABMVQBBRQZzUhaTdhiQlA9vZQuVZgCBZABQWABESQF4VRSaehaXmRB0");
+  background-image: url('data:image/bmp;base64,Qk32BAAAAAAAADYAAAAoAAAACAAAAAgAAAABABgAAAAAAMAAAAATCwAAEwsAAAAAAAAAAAAAiCywhiWbfBRjZhQsRShWKTV9OzN+WCddiyqYhiKHdw9XXRApOSZKIzJqOzBqVSJOjSZ4hh5qcQdHUAgnKSI8IC5UQCxTWBs8iiFeghhTawA5RwAqIBw9KSlOTCZLZBQ3ghphexFVZgA4RgAyKRVPOSNiXCBfdg9IdhN4cgpoZABCTQA7OQ1kSBx+axt7iA5eag2NaQJ6ZABMVQBBRQZzUhaTdhiQlA9vZQuVZgCBZABQWABESQF4VRSaehaXmRB0');
   background-size: cover;
 }
 
@@ -41,4 +41,84 @@
 
 .btn_more {
   padding: 20px;
+}
+
+@media (max-width: 1220px) {
+  .games_list {
+    padding: 20px 30px;
+  }
+
+  .card {
+    width: 300px;
+  }
+
+  .card-body {
+    height: 300px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 1003px) {
+  .games_list {
+    padding: 20px 20px;
+  }
+
+  .card {
+    width: 270px;
+  }
+}
+
+@media (max-width: 890px) {
+  .games_list {
+    padding: 20px 5px;
+  }
+
+  .card {
+    width: 250px;
+  }
+
+  .card-body {
+    height: 300px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 800px) {
+  .games_list {
+    padding: 20px 5px;
+  }
+
+  .card {
+    width: 230px;
+  }
+
+  .card-body {
+    height: 200px;
+    gap: 40px;
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 490px) {
+  .games_list {
+    padding: 20px 5px;
+  }
+
+  .card {
+    width: 300px;
+  }
+
+  .card-body {
+    height: 350px;
+    gap: 40px;
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 17px;
+  }
 }

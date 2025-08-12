@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import "../../styles/Comments.css";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import '../../styles/Comments.css';
 
 function Comments() {
   const { id } = useParams();
 
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
 
   const [currentUserId, setCurrentUserId] = useState(null);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editCommentId, setEditCommentId] = useState(null);
-  const [editContent, setEditContent] = useState("");
+  const [editContent, setEditContent] = useState('');
 
   const openEditModal = (comment) => {
     setEditCommentId(comment.id);
@@ -22,18 +22,18 @@ function Comments() {
 
   const closeEditModal = (comment) => {
     setEditCommentId(null);
-    setEditContent("");
+    setEditContent('');
     setIsEditModalOpen(false);
   };
 
   const handleEditSubmit = async () => {
     try {
       const res = await fetch(`/api/comments/${editCommentId}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        credentials: "include",
+        credentials: 'include',
         body: JSON.stringify({ content: editContent }),
       });
 
@@ -46,10 +46,10 @@ function Comments() {
 
         closeEditModal();
       } else {
-        alert("Failed to update comment");
+        alert('Failed to update comment');
       }
     } catch (error) {
-      console.error("Edit failed:", error);
+      console.error('Edit failed:', error);
     }
   };
 
@@ -66,8 +66,8 @@ function Comments() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch("/api/users/check-session", {
-        credentials: "include",
+      const res = await fetch('/api/users/check-session', {
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -86,11 +86,11 @@ function Comments() {
     if (!newComment.trim()) return;
 
     const res = await fetch(`/api/comments`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      credentials: "include",
+      credentials: 'include',
       body: JSON.stringify({
         content: newComment,
         game_id: id,
@@ -100,86 +100,88 @@ function Comments() {
     if (res.ok) {
       const createdComment = await res.json();
       setComments([...comments, createdComment]);
-      setNewComment("");
+      setNewComment('');
     } else {
-      alert("Failed to post a comment");
+      alert('Failed to post a comment');
     }
   };
 
   const handleDelete = async (commentId) => {
-    const confirmed = window.confirm("Delete this comment?");
+    const confirmed = window.confirm('Delete this comment?');
     if (!confirmed) return;
 
     const res = await fetch(`/api/comments/${commentId}`, {
-      method: "DELETE",
-      credentials: "include",
+      method: 'DELETE',
+      credentials: 'include',
     });
 
     if (res.ok) {
       setComments(comments.filter((comment) => comment.id !== commentId));
     } else {
-      alert("Failed to delete comment");
+      alert('Failed to delete comment');
     }
   };
 
   return (
-    <div className="comments-main">
-      <div className="input-submit">
-        <form onSubmit={handleSubmit} className="form-game">
+    <div className='comments-main'>
+      <div className='input-submit'>
+        <form onSubmit={handleSubmit} className='form-game'>
           <input
-            type="text"
-            placeholder="Write something"
-            className="input input-primary"
+            type='text'
+            placeholder='Write something'
+            className='input input-primary input-field'
             onChange={(e) => setNewComment(e.target.value)}
             value={newComment}
           />
-          <button type="submit" className="btn btn-soft btn-primary">
+          <button type='submit' className='btn btn-soft btn-primary'>
             Send
           </button>
         </form>
 
-        <div className="comments-all">
+        <div className='comments-all'>
           {comments.length === 0 && (
-            <p className="first-comment">Be the first one!</p>
+            <p className='first-comment'>Be the first one!</p>
           )}
           <ul>
             {comments.map((comment) => (
-              <li key={comment.id} className="list-game">
-                {comment.user_id === currentUserId && (
-                  <>
-                    <button
-                      type="submit"
-                      className="btn-delete"
-                      onClick={() => handleDelete(comment.id)}
-                    >
-                      🗑️
-                    </button>
-                    <button
-                      className="btn-edit"
-                      onClick={() => openEditModal(comment)}
-                    >
-                      ✏️
-                    </button>
-                  </>
-                )}
-                <div className="chat chat-start">
-                  <div className="chat-header">
-                    <div className="content-name">
+              <li key={comment.id} className='list-game'>
+                <div className='buttons-interaction'>
+                  {comment.user_id === currentUserId && (
+                    <>
+                      <button
+                        type='submit'
+                        className='btn-delete'
+                        onClick={() => handleDelete(comment.id)}
+                      >
+                        🗑️
+                      </button>
+                      <button
+                        className='btn-edit'
+                        onClick={() => openEditModal(comment)}
+                      >
+                        ✏️
+                      </button>
+                    </>
+                  )}
+                </div>
+                <div className='chat chat-start'>
+                  <div className='chat-header'>
+                    <div className='content-name'>
                       {comment.username}
-                      <div className="time-game">
-                        <time className="text-xs opacity-50">
+                      <div className='time-game'>
+                        <time className='text-xs opacity-50'>
                           {new Date(comment.created_at).toLocaleString(
-                            "es-ES",
+                            'es-ES',
                             {
-                              dateStyle: "short",
-                              timeStyle: "short",
+                              dateStyle: 'short',
+                              timeStyle: 'short',
                             }
                           )}
                         </time>
                       </div>
                     </div>
                   </div>
-                  <div className="chat-bubble">{comment.content}</div>
+                  <div className='chat-bubble'>{comment.content}</div>
                 </div>
               </li>
             ))}
@@ -187,22 +189,22 @@ function Comments() {
         </div>
       </div>
       {isEditModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3 className="text">Edit comment</h3>
+        <div className='modal-overlay'>
+          <div className='modal-content'>
+            <h3 className='text'>Edit comment</h3>
             <textarea
-              className="textarea textarea-bordered"
+              className='textarea textarea-bordered'
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
             />
-            <div className="modal-buttons">
+            <div className='modal-buttons'>
               <button
-                className="btn btn-primary btn-modal"
+                className='btn btn-primary btn-modal'
                 onClick={handleEditSubmit}
               >
                 Save
               </button>
-              <button className="btn btn-modal" onClick={closeEditModal}>
+              <button className='btn btn-modal' onClick={closeEditModal}>
                 Cancel
               </button>
             </div>

@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-import "../../styles/Navbar.css";
+import '../../styles/Navbar.css';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ function Navbar() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("/api/users/check-session", {
-          credentials: "include",
+        const res = await fetch('/api/users/check-session', {
+          credentials: 'include',
         });
         const data = await res.json();
 
@@ -21,7 +21,7 @@ function Navbar() {
           setUsername(data.username);
         }
       } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error('Error fetching user:', error);
       }
     };
 
@@ -30,42 +30,43 @@ function Navbar() {
 
   const handleLogOut = async () => {
     try {
-      await fetch("/logout", {
-        method: "POST",
-        credentials: "include",
+      await fetch('/logout', {
+        method: 'POST',
+        credentials: 'include',
       });
 
-      navigate("/signup");
+      navigate('/signup');
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
     }
   };
   return (
     <>
-      <div className="navbar bg-base-100 shadow-sm">
-        <div className="left-side">
-          <button className="btn btn-ghost" onClick={handleLogOut}>
+      <div className='navbar bg-base-100 shadow-sm'>
+        <div className='left-side'>
+          <button className='btn btn-ghost' onClick={handleLogOut}>
             Log out
           </button>
         </div>
-        <Link to={"/homepage"}>
-          <div className="center">
-            <button className="btn btn-ghost text-xl">Games</button>
+        <Link to={'/homepage'}>
+          <div className='center'>
+            <button className='btn games-btn'>Games</button>
           </div>
         </Link>
-        <div className="right-side">
-          <Link to={"/favourites"}>
-            <button className="btn btn-ghost">Favorites</button>
-          </Link>
-          <div className="username-nav">
-            {username ? (
-              <p className="username-text">{username}</p>
-            ) : (
-              <Link to={"/signup"}>
-                <button className="btn btn-ghost">Sign up or Log in!</button>
+
+        <div className='username-nav'>
+          {username ? (
+            <div className='right-side'>
+              <Link to={'/favourites'}>
+                <button className='btn btn-ghost'>Favorites</button>
               </Link>
-            )}
-          </div>
+              <p className='username-text'>{username}</p>
+            </div>
+          ) : (
+            <Link to={'/signup'}>
+              <button className='btn btn-ghost'>Sign up!</button>
+            </Link>
+          )}
         </div>
       </div>
     </>
