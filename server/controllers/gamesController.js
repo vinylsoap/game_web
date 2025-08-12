@@ -4,7 +4,6 @@ const API_BASE_URL = process.env.API_BASE_URL;
 const API_KEY = process.env.API_KEY;
 
 // Getting list of games
-// TODO: PAGINATION HERE
 export const getGames = async (req, res) => {
   const { page = 1, page_size = 18 } = req.query;
 
@@ -30,8 +29,6 @@ export const getGames = async (req, res) => {
       has_next: game.next !== null,
       has_previous: game.previous !== null,
     }));
-
-    // let wholePage = { next, previous, result };
 
     res.json(result);
   } catch (error) {
