@@ -1,30 +1,46 @@
-import axios from "axios";
+import axios from 'axios';
 
 const API_BASE_URL = process.env.API_BASE_URL;
 const API_KEY = process.env.API_KEY;
 
 // Getting list of games
+// TODO: PAGINATION HERE
 export const getGames = async (req, res) => {
-  try {
-    const response = await axios.get(
-      `${API_BASE_URL}/games?key=${API_KEY}&genres=indie&page_size=30`
-    );
+  const { page = 1, page_size = 18 } = req.query;
 
-    const filteredGames = response.data.results.map((game) => ({
+  try {
+    const response = await axios.get(`${API_BASE_URL}/games?key=${API_KEY}`, {
+      params: {
+        page,
+        page_size,
+      },
+    });
+
+    // const next = response.data.next;
+    // const previous = response.data.previous;
+
+    const result = response.data.results.map((game) => ({
+      page: Number(page),
+      page_size: Number(page_size),
       id: game.id,
       name: game.name,
       released: game.released,
       image: game.background_image,
       rating: game.rating,
+      has_next: game.next !== null,
+      has_previous: game.previous !== null,
     }));
-    res.json(filteredGames);
+
+    // let wholePage = { next, previous, result };
+
+    res.json(result);
   } catch (error) {
-    console.error("Failed to get the games:", error);
-    res.status(500).json({ error: "Server error" });
+    console.error('Failed to get the games:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 };
 
-// Get ONE game
+// Get ONE game (dont touch this one please)
 export const getGamesById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -43,7 +59,7 @@ export const getGamesById = async (req, res) => {
 
     res.json(gameDetails);
   } catch (error) {
-    console.error("Failed to get info about the game:", error);
-    res.status(500).json({ error: "Server failed" });
+    console.error('Failed to get info about the game:', error);
+    res.status(500).json({ error: 'Server failed' });
   }
 };
